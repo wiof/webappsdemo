@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<script type="text/javascript">  var appInsights=window.appInsights||function(config){    function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t    }({        instrumentationKey:"1829a24c-eaf5-4c36-9cfd-36a1b6b24a0e"    });           window.appInsights=appInsights;    appInsights.trackPageView();</script>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <style>
+        h1 { color: #333; font-family: 'Helvetica Neue', sans-serif; font-size: 4em; font-weight: bold; letter-spacing: -1px; line-height: 1; }
+        form, #resultado { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 1.5em; margin: 2em; }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de PI</h1>
+
+    <form>
+        <label for="iteraciones">Iteraciones:</label>
+        <input type="text" id="iteraciones" />
+        <input type="submit" value="Calcular" />
+    </form>
+
+    <div id="resultado"></div>
+
+    <div>
+        <a href="http://capside.com">Salir</a>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script>
+
+        function submitPiCalc() {
+            appInsights.trackEvent('NuevoCalculo');
+            var steps = $('#iteraciones').val();
+            $('#resultado').text('Retrieving data.');
+            $.getJSON('api/pi/' + steps)
+             .done(function (resultado) {
+                 $('#resultado').text(resultado.pi);
+             }).fail(function (err) {
+                 console.error('Error.', err);
+                 $('#resultado').text('Error retrieving data.');
+             });
+        }
+
+        $(document).ready(function () {
+            $('form').submit(function (evt) {
+                evt.preventDefault();
+                submitPiCalc();
+            });
+        });
+
+
+    </script>
+</body>
+</html>
