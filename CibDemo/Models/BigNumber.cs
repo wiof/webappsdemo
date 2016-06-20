@@ -138,7 +138,7 @@ namespace CibDemo.Models
                 digitCount += 5;
             }
 
-            return sb.ToString();
+            return sb.Replace('.', ',').ToString();
         }
         public bool IsZero()
         {
